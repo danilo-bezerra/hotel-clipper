@@ -14,6 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.LongStringConverter;
 
 
 import java.net.URL;
@@ -71,6 +74,46 @@ public class SearchController extends Controller  {  @FXML
 
     private GuestDAO guestDAO;
     private AccommodationDAO accommodationDAO;
+
+    @FXML
+    private DatePicker inputBirthDate;
+
+    @FXML
+    private TextField inputName;
+
+    @FXML
+    private TextField inputId;
+
+    @FXML
+    private TextField inputNationality;
+
+    @FXML
+    private TextField inputLastname;
+
+    @FXML
+    private TextField inputPhone;
+
+
+    @FXML
+    private TextField inputTotalValue;
+
+    @FXML
+    private ChoiceBox<PaymentMethod> inputPaymentMethod;
+
+    @FXML
+    private DatePicker inputCheckInDate;
+
+    @FXML
+    private DatePicker inputCheckOutDate;
+
+    @FXML
+    private TextField inputGuestId;
+
+    @FXML
+    private TextField inputGuestName;
+
+    @FXML
+    private TextField inputAccId;
     public SearchController() {
         super();
         accommodationDAO = new AccommodationDAO(em);
@@ -95,6 +138,17 @@ public class SearchController extends Controller  {  @FXML
         //tableAccommodations.setItems(getAccommodations());
 
         accId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getId()).asObject());
+        //accId.setCellFactory(TextFieldTableCell.forTableColumn());
+       // accId.setOnEditCommit(event -> {
+        //    Accommodation item = event.getRowValue();
+        //    item.setId(event.getNewValue());
+        //});
+
+//        accId = new TableColumn<>("ID");
+//        accId.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        accId.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+
+
         accCheckIn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCheckInDate()));
         accChecOut.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCheckOutDate()));
         accGuestId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getGuest().getId()).asObject());
@@ -102,7 +156,46 @@ public class SearchController extends Controller  {  @FXML
         accTotalValue.setCellValueFactory((cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalValue()).asObject()));
         accPaymentMethod.setCellValueFactory((cellData -> new SimpleObjectProperty<>(cellData.getValue().getPaymentMethod())));
 
+
+
         fillTables();
+        tableAccommodations.setEditable(true);
+        guestTable.setEditable(true);
+
+        inputId.setEditable(false);
+
+        ObservableList<PaymentMethod> paymentMethods = FXCollections.observableArrayList(PaymentMethod.values());
+        inputPaymentMethod.setItems(paymentMethods);
+
+
+        guestTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, guest) -> {
+            if (guest != null) {
+                System.out.println("Linha selecionada: " + guest);
+                inputId.setText(guest.getId().toString());
+                inputName.setText(guest.getfName());
+                inputLastname.setText(guest.getlName());
+                inputPhone.setText(guest.getPhone());
+                inputNationality.setText(guest.getNationality());
+                inputBirthDate.setValue(guest.getBirthDate());
+            }
+
+        });
+
+        tableAccommodations.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, accommodation) -> {
+            if (accommodation != null) {
+                System.out.println("Linha selecionada: " + accommodation);
+                inputGuestId.setText(accommodation.getGuest().getId().toString());
+                inputGuestName.setText(accommodation.getGuest().getfName());
+                inputCheckInDate.setValue(accommodation.getCheckInDate());
+                inputCheckOutDate.setValue(accommodation.getCheckOutDate());
+                inputAccId.setText(accommodation.getId().toString());
+                inputTotalValue.setText(accommodation.getTotalValue().toString());
+                inputPaymentMethod.setValue(accommodation.getPaymentMethod());
+
+
+            }
+
+        });
     }
 
     private void fillTables() {
@@ -195,14 +288,40 @@ public class SearchController extends Controller  {  @FXML
         Object selected = getSelectedItem();
 
         if (selected instanceof  Guest) {
-            //guestDAO.update((Guest) selected);
-        } else if (selected instanceof  Accommodation) {
-            //accommodationDAO.update((Accommodation) selected);
+            Guest g = new Guest(inputName.getText(), inputLastname.getText(),inputBirthDate.getValue(), inputNationality.getText(), inputPhone.getText() );
+            g.setId(Long.parseLong(inputId.getText()));
+            guestDAO.update(g);
+        } else if (selected instanceof Accommodation a) {
+            a.setCheckInDate(inputCheckInDate.getValue());
+            a.setCheckOutDate(inputCheckOutDate.getValue());
+            a.setPaymentMethod(inputPaymentMethod.getValue());
+
+            accommodationDAO.update(a);
         }
 
 
         System.out.println("Salvar: " +  selected);
 
         fillTables();
+    }
+
+    public void clearGuestForm() {
+        inputBirthDate.setValue(null);
+        inputId.setText("");
+        inputName.setText("");
+        inputLastname.setText("");
+        inputPhone.setText("");
+        inputNationality.setText("");
+    }
+
+    public void clearAccForm() {
+        inputAccId.setText(null);
+        inputGuestId.setText(null);
+        inputGuestName.setText(null);
+        inputPaymentMethod.setValue(null);
+        inputTotalValue.setText(null);
+        inputCheckInDate.setValue(null);
+        inputCheckOutDate.setValue(null);
+
     }
 }
