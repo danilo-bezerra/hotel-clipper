@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.SearchController">
+   <children>
+      <TabPane fx:id="tabPane" layoutX="6.0" layoutY="57.0" prefHeight="291.0" prefWidth="793.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab id="guestTable" text="Hospedes">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="guestTable" prefHeight="262.0" prefWidth="793.0">
+                          <columns>
+                            <TableColumn fx:id="columnId" prefWidth="51.0" text="Id" />
+                            <TableColumn fx:id="columnName" prefWidth="99.0" text="Nome" />
+                              <TableColumn fx:id="columnLastName" text="Sobrenome" />
+                              <TableColumn fx:id="columnBirthDate" prefWidth="89.0" text="Data Nascimento" />
+                              <TableColumn fx:id="columnNationality" prefWidth="97.0" text="Nacionalidade" />
+                              <TableColumn fx:id="columnPhone" prefWidth="100.0" text="Telefone" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Reservas">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="793.0">
+                     <children>
+                        <TableView fx:id="tableAccommodations" prefHeight="262.0" prefWidth="793.0">
+                          <columns>
+                            <TableColumn fx:id="accId" prefWidth="75.0" text="id" />
+                            <TableColumn fx:id="accCheckIn" prefWidth="75.0" text="data inicio" />
+                              <TableColumn fx:id="accChecOut" prefWidth="75.0" text="data fim" />
+                              <TableColumn fx:id="accGuestId" prefWidth="75.0" text="id hospede" />
+                              <TableColumn fx:id="accGuestName" prefWidth="113.0" text="nome hospede" />
+                              <TableColumn fx:id="accPaymentMethod" prefWidth="127.0" text="metodo pagamento" />
+                              <TableColumn fx:id="accTotalValue" prefWidth="75.0" text="valor total" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#goBackToHome" text="Voltar" />
+      <Button layoutX="734.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveItem" text="Salvar" />
+      <Button layoutX="671.0" layoutY="361.0" mnemonicParsing="false" onAction="#deleteItem" text="Apagar" />
+   </children>
+</AnchorPane>
