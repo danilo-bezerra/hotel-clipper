@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="274.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.GuestTableController">
+   <children>
+      <TableView fx:id="table" layoutX="-1.0" layoutY="-1.0" prefHeight="274.0" prefWidth="793.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colName" prefWidth="75.0" text="nome" />
+            <TableColumn fx:id="colLastName" prefWidth="75.0" text="sobrenome" />
+            <TableColumn fx:id="ColBirthDate" prefWidth="75.0" text="nascimento" />
+            <TableColumn fx:id="colNationality" prefWidth="75.0" text="nacionalidade" />
+            <TableColumn fx:id="colPhone" prefWidth="75.0" text="telefone" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

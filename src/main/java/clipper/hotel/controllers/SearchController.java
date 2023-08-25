@@ -22,58 +22,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class SearchController extends Controller  {
-
-
     private AccommodationDAO accommodationDAO;
-
-
-    @FXML
-    private TableColumn<Guest, LocalDate> columnBirthDate;
-
-    @FXML
-    private TableColumn<Guest, Long> columnId;
-
-    @FXML
-    private TableColumn<Guest, String> columnLastName;
-
-    @FXML
-    private TableColumn<Guest, String> columnName;
-
-    @FXML
-    private TableColumn<Guest, String> columnPhone;
-
-    @FXML
-    private TableColumn<Guest, String> columnNationality;
-
-    @FXML
-    private TableView<Guest> guestTable;
-
-
 
     @FXML
     private TabPane tabPane;
 
     private GuestDAO guestDAO;
-
-
-    @FXML
-    private DatePicker inputBirthDate;
-
-    @FXML
-    private TextField inputName;
-
-    @FXML
-    private TextField inputId;
-
-    @FXML
-    private TextField inputNationality;
-
-    @FXML
-    private TextField inputLastname;
-
-    @FXML
-    private TextField inputPhone;
-
 
     @FXML
     private AnchorPane accTablePane;
@@ -81,9 +35,19 @@ public class SearchController extends Controller  {
     @FXML
     public AnchorPane accFormPane;
 
+    @FXML
+    public AnchorPane guestTablePane;
+
+    @FXML
+    public AnchorPane guestFormPane;
+
     private AccommodationTableController accommodationTableController;
 
     private AccommodationFormController accommodationFormController;
+
+    private GuestTableController guestTableController;
+
+    private GuestFormController guestFormController;
 
 
     public SearchController() {
@@ -94,14 +58,6 @@ public class SearchController extends Controller  {
 
     public void initialize() {
 
-
-        columnId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getId()).asObject());
-        columnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getfName()));
-        columnLastName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getlName()));
-        columnBirthDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getBirthDate()));
-        columnPhone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhone()));
-        columnNationality.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNationality()));
-
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("accommodation-table.fxml"));
             accTablePane.getChildren().add(loader.load());
@@ -111,27 +67,23 @@ public class SearchController extends Controller  {
             accFormPane.getChildren().add(loader.load());
             accommodationFormController = loader.getController();
 
+            loader =  new FXMLLoader(HelloApplication.class.getResource("guest-table.fxml"));
+            guestTablePane.getChildren().add(loader.load());
+            guestTableController = loader.getController();
+
+            loader =  new FXMLLoader(HelloApplication.class.getResource("guest-form.fxml"));
+            guestFormPane.getChildren().add(loader.load());
+            guestFormController = loader.getController();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         fillTables();
 
-        guestTable.setEditable(true);
-
-        inputId.setEditable(false);
-
-
-
-        guestTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, guest) -> {
+        guestTableController.getTable().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, guest) -> {
             if (guest != null) {
-                System.out.println("Linha selecionada: " + guest);
-                inputId.setText(guest.getId().toString());
-                inputName.setText(guest.getfName());
-                inputLastname.setText(guest.getlName());
-                inputPhone.setText(guest.getPhone());
-                inputNationality.setText(guest.getNationality());
-                inputBirthDate.setValue(guest.getBirthDate());
+                guestFormController.setFormValue(guest);
             }
 
         });
@@ -147,9 +99,7 @@ public class SearchController extends Controller  {
 
     private void fillTables() {
         System.out.println("AUALIZANDO");
-        guestTable.setItems(getGuests());
-
-        guestTable.refresh();
+        guestTableController.updateTable(getGuests());
         accommodationTableController.updateTable(getAccommodations());
     }
 
@@ -172,18 +122,11 @@ public class SearchController extends Controller  {
 
 
     public Object getSelectedItem() {
-        SelectionModel<Guest> guestSelectionModel = guestTable.getSelectionModel();
 
         String selectedTab = getSelectedTab();
 
-        if (!guestSelectionModel.isEmpty() && Objects.equals(selectedTab, "Hospedes")) {
-            int selectedIndex = guestSelectionModel.getSelectedIndex();
-
-            Guest selectedItem = guestTable.getItems().get(selectedIndex);
-
-            System.out.println("Guest Selecionado " + selectedItem);
-
-            return selectedItem;
+        if (Objects.equals(selectedTab, "Hospedes")) {
+            return guestTableController.getSelectedItem();
         } else if (Objects.equals(selectedTab, "Reservas")) {
             return accommodationTableController.getSelectedItem();
         }
@@ -220,64 +163,41 @@ public class SearchController extends Controller  {
             accommodationDAO.remove((Accommodation) selected);
         }
 
-        System.out.println("Apagar: " +  getSelectedItem());
-
         fillTables();
     }
 
     public void saveItem() {
-        Object selected = getSelectedItem();
-
-        if (selected instanceof  Guest) {
-            Guest g = new Guest(inputName.getText(), inputLastname.getText(),inputBirthDate.getValue(), inputNationality.getText(), inputPhone.getText() );
-            g.setId(Long.parseLong(inputId.getText()));
-            guestDAO.update(g);
-        }
-
-//        } else if (selected instanceof Accommodation) {
-//            Accommodation a = accommodationFormController.getData();
-//            if (a.getId() != null) {
-//                accommodationDAO.update(a);
-//            } else {
-//                accommodationDAO.create(a);
-//            }
-//        }
-
         switch (getSelectedTab()) {
-            case "Reservas":
+            case "Reservas" -> {
                 Accommodation a = accommodationFormController.getData();
                 if (a.getId() != null) {
                     accommodationDAO.update(a);
                 } else {
                     accommodationDAO.create(a);
                 }
-                break;
-
-            case "Hospedes":
-                break;
+            }
+            case "Hospedes" -> {
+                Guest g = guestFormController.getFormValue();
+                if (g.getId() != null) {
+                    guestDAO.update(g);
+                } else {
+                    guestDAO.create(g);
+                }
+            }
         }
 
-
-        System.out.println("Salvar: " +  selected);
         clearForms();
         fillTables();
 
     }
 
-    public void clearGuestForm() {
-        inputBirthDate.setValue(null);
-        inputId.setText("");
-        inputName.setText("");
-        inputLastname.setText("");
-        inputPhone.setText("");
-        inputNationality.setText("");
 
-        guestTable.getSelectionModel().clearSelection();
-    }
 
     public void clearForms() {
         accommodationFormController.clear();
         accommodationTableController.clearSelectedItem();
-        clearGuestForm();
+
+        guestTableController.clearSelectedItem();
+        guestFormController.clear();
     }
 }
