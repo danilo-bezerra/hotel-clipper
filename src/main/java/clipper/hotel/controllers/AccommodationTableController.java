@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AccommodationTableController {
+public class AccommodationTableController extends TableController<Accommodation>{
     private AccommodationDAO dao;
 
     @FXML
@@ -49,20 +49,9 @@ public class AccommodationTableController {
     @FXML
     private TableColumn<Accommodation, Double> colTotalValue;
 
-    @FXML
-    private TableView<Accommodation> table;
-
-    public AccommodationTableController() {
-        //super();
-        dao = new AccommodationDAO(ConnectionFactory.getEntitymanager());
-
-    }
-
-    public TableView<Accommodation> getTable() {
-        return table;
-    }
-
+    @Override
     public void initialize() {
+
         colId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getId()).asObject());
         colCheckIn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCheckInDate()));
         colCheckOut.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCheckOutDate()));
@@ -71,44 +60,6 @@ public class AccommodationTableController {
         colTotalValue.setCellValueFactory((cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalValue()).asObject()));
         colPaymentMethod.setCellValueFactory((cellData -> new SimpleObjectProperty<>(cellData.getValue().getPaymentMethod())));
 
-        updateTable(getData());
     }
-
-    private ObservableList<Accommodation> getData() {
-        ObservableList<Accommodation> list = FXCollections.observableArrayList();
-        List<Accommodation> accommodations = dao.findAll();
-        list.addAll(accommodations);
-
-        return list;
-    }
-
-    public void updateTable(ObservableList<Accommodation> data) {
-        System.out.println("ATUALIZANDO tabela de acomodações");
-        table.setItems(data);
-
-        table.refresh();
-    }
-
-    public Accommodation getSelectedItem() {
-        SelectionModel<Accommodation> selectionModel = table.getSelectionModel();
-
-
-        if (!selectionModel.isEmpty()) {
-            int selectedIndex = selectionModel.getSelectedIndex();
-
-            Accommodation selectedItem = table.getItems().get(selectedIndex);
-
-            System.out.println("Accommodation Selecionado " + selectedItem);
-
-            return selectedItem;
-        }
-
-        return null;
-    }
-
-    public void clearSelectedItem() {
-        table.getSelectionModel().clearSelection();
-    }
-
 
 }
