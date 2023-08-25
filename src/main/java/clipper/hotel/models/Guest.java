@@ -95,14 +95,12 @@ public class Guest{
 
     @Override
     public String toString() {
-        return "Guest{" +
-                "id=" + id +
-                ", fName='" + fName + '\'' +
-                ", lName='" + lName + '\'' +
-                ", birthDate=" + birthDate +
-                ", nationality='" + nationality + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+        return "id=" + id +
+                ", nome='" + fName + '\'' +
+                ", sobrenome='" + lName + '\'' +
+                ", nascimento=" + birthDate +
+                ", nacionalidade='" + nationality + '\'' +
+                ", telefone='" + phone + '\'';
     }
 }
 
