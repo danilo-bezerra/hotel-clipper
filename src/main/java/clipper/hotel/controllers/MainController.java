@@ -1,17 +1,30 @@
 package clipper.hotel.controllers;
 
 import clipper.hotel.HelloApplication;
+import clipper.hotel.dao.AccommodationDAO;
+import clipper.hotel.dao.GuestDAO;
+import clipper.hotel.factory.ConnectionFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-public class MainController {
+public class MainController extends Controller{
     private static Stage primaryStage;
+
+    @FXML
+    private Label lblAccommodationsCount;
+
+    @FXML
+    private Label lblGuestsCount;
+
+
 
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
@@ -63,4 +76,14 @@ public class MainController {
             primaryStage.show();
 
     }
+
+    public void initialize() {
+        AccommodationDAO accommodationDAO = new AccommodationDAO(em);
+        GuestDAO guestDAO = new GuestDAO(em);
+
+        lblAccommodationsCount.setText(String.format("%d", accommodationDAO.findAll().size()));
+        lblGuestsCount.setText(String.format("%d", guestDAO.findAll().size()));
+    }
+
+
 }
