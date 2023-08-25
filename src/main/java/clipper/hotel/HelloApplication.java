@@ -26,7 +26,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("auth-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Hotel Clipper");
-        stage.getIcons().add(new Image("https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png"));
+        stage.getIcons().add(new Image("https://res.cloudinary.com/djfhgizpf/image/upload/v1692981618/logo_1_bdtr9f.png"));
         stage.setScene(scene);
 
         stage.show();
