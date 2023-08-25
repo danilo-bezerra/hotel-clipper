@@ -169,7 +169,7 @@ public class SearchController extends Controller  {
     public void saveItem() {
         switch (getSelectedTab()) {
             case "Reservas" -> {
-                Accommodation a = accommodationFormController.getData();
+                Accommodation a = accommodationFormController.getFormValue();
                 if (a.getId() != null) {
                     accommodationDAO.update(a);
                 } else {

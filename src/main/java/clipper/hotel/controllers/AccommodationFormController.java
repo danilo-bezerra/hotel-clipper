@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 
 
 
-public class AccommodationFormController {
+public class AccommodationFormController extends FormController<Accommodation> {
     @FXML
     private DatePicker inputCheckIn;
 
@@ -34,6 +34,7 @@ public class AccommodationFormController {
     @FXML
     private TextField inputTotalValue;
 
+    @Override
     public void initialize() {
         inputCheckIn.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && inputCheckOut.getValue() !=  null) {
@@ -59,6 +60,7 @@ public class AccommodationFormController {
 
 
 
+    @Override
     public void setFormValue(Accommodation data) {
         inputId.setText(data.getId().toString());
         inputCheckIn.setValue(data.getCheckInDate());
@@ -68,16 +70,8 @@ public class AccommodationFormController {
         inputGuest.setValue(data.getGuest());
     }
 
-    public void clear() {
-        inputId.setText(null);
-        inputCheckIn.setValue(null);
-        inputCheckOut.setValue(null);
-        inputPaymentMethod.setValue(null);
-        inputTotalValue.setText(null);
-        inputGuest.setValue(null);
-    }
-
-    public Accommodation getData() {
+    @Override
+    public Accommodation getFormValue() {
         Accommodation data = new Accommodation();
         try {
             data.setId(Long.parseLong(inputId.getText()));
@@ -91,4 +85,16 @@ public class AccommodationFormController {
 
         return data;
     }
+
+    @Override
+    public void clear() {
+        inputId.setText(null);
+        inputCheckIn.setValue(null);
+        inputCheckOut.setValue(null);
+        inputPaymentMethod.setValue(null);
+        inputTotalValue.setText(null);
+        inputGuest.setValue(null);
+    }
+
+
 }
