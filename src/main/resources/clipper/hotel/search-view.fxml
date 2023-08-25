@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" minHeight="600.0" minWidth="800.0" prefHeight="1016.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.SearchController">
+<AnchorPane fx:id="root" minHeight="600.0" minWidth="800.0" prefHeight="651.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.SearchController">
    <children>
-      <TabPane fx:id="tabPane" layoutX="6.0" layoutY="57.0" prefHeight="552.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutX="6.0" layoutY="57.0" prefHeight="537.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab id="guestTable" text="Hospedes">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="497.0" prefWidth="786.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="786.0">
                      <children>
                          <fx:include fx:id="guestTablePane" prefHeight="274.0" prefWidth="793.0" source="guest-table.fxml" />
                          <fx:include fx:id="guestFormPane" layoutY="285.0" prefHeight="274.0" prefWidth="793.0" source="guest-form.fxml" />
@@ -28,10 +30,27 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="22.0" layoutY="609.0" mnemonicParsing="false" onAction="#goBackToHome" text="Voltar" />
-      <Button layoutX="198.0" layoutY="609.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="25.0" prefWidth="101.0" text="Apagar" />
-      <Button layoutX="309.0" layoutY="609.0" mnemonicParsing="false" onAction="#clearForms" text="Limpar Formulario" />
-      <Button layoutX="537.0" layoutY="609.0" mnemonicParsing="false" onAction="#saveItem" prefHeight="25.0" prefWidth="101.0" text="Salvar" />
+      <Button layoutX="22.0" layoutY="609.0" mnemonicParsing="false" onAction="#goBackToHome" text="Voltar">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor></Button>
+      <Button layoutX="252.0" layoutY="609.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="25.0" prefWidth="101.0" text="Apagar">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor></Button>
+      <Button layoutX="361.0" layoutY="609.0" mnemonicParsing="false" onAction="#clearForms" text="Limpar Formulario">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor></Button>
+      <Button layoutX="685.0" layoutY="609.0" mnemonicParsing="false" onAction="#saveItem" prefHeight="25.0" prefWidth="101.0" text="Salvar">
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor></Button>
+      <Label layoutX="14.0" layoutY="14.0" text="Hotel Clipper">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
 
 
    </children>
