@@ -103,7 +103,7 @@ public class SearchController extends Controller  {
         columnNationality.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNationality()));
 
         try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("AccommodationTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("accommodation-table.fxml"));
             accTablePane.getChildren().add(loader.load());
             accommodationTableController = loader.getController();
 
@@ -232,9 +232,29 @@ public class SearchController extends Controller  {
             Guest g = new Guest(inputName.getText(), inputLastname.getText(),inputBirthDate.getValue(), inputNationality.getText(), inputPhone.getText() );
             g.setId(Long.parseLong(inputId.getText()));
             guestDAO.update(g);
+        }
 
-        } else if (selected instanceof Accommodation) {
-            accommodationDAO.update(accommodationFormController.getData());
+//        } else if (selected instanceof Accommodation) {
+//            Accommodation a = accommodationFormController.getData();
+//            if (a.getId() != null) {
+//                accommodationDAO.update(a);
+//            } else {
+//                accommodationDAO.create(a);
+//            }
+//        }
+
+        switch (getSelectedTab()) {
+            case "Reservas":
+                Accommodation a = accommodationFormController.getData();
+                if (a.getId() != null) {
+                    accommodationDAO.update(a);
+                } else {
+                    accommodationDAO.create(a);
+                }
+                break;
+
+            case "Hospedes":
+                break;
         }
 
 

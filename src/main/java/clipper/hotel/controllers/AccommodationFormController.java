@@ -79,7 +79,11 @@ public class AccommodationFormController {
 
     public Accommodation getData() {
         Accommodation data = new Accommodation();
-        data.setId(Long.parseLong(inputId.getText()));
+        try {
+            data.setId(Long.parseLong(inputId.getText()));
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+        }
         data.setCheckInDate(inputCheckIn.getValue());
         data.setCheckOutDate(inputCheckOut.getValue());
         data.setPaymentMethod(inputPaymentMethod.getValue());
