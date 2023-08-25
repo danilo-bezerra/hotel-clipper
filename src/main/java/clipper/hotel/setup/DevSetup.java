@@ -3,10 +3,7 @@ package clipper.hotel.setup;
 import clipper.hotel.dao.AccommodationDAO;
 import clipper.hotel.dao.EmployeeDAO;
 import clipper.hotel.dao.GuestDAO;
-import clipper.hotel.models.Accommodation;
-import clipper.hotel.models.Employee;
-import clipper.hotel.models.Guest;
-import clipper.hotel.models.PaymentMethod;
+import clipper.hotel.models.*;
 
 
 import javax.persistence.EntityManager;
@@ -24,8 +21,8 @@ public class DevSetup {
         AccommodationDAO accommodationDAO = new AccommodationDAO(em);
 
         Employee e1 = new Employee("clipper", "password" );
-        Guest g1 = new Guest("Alien", "Clipper", LocalDate.now().minusYears(20L), "Brazilian", "88 981882984");
-        Guest g2 = new Guest("Zoe", "Groove", LocalDate.now().minusYears(19L), "Brazilian", "88 985968899");
+        Guest g1 = new Guest("Alien", "Clipper", LocalDate.now().minusYears(20L), Nationality.BRASIL, "88 981882984");
+        Guest g2 = new Guest("Zoe", "Groove", LocalDate.now().minusYears(19L), Nationality.AUSTRALIA, "88 985968899");
 
 
         guestDAO.create(g1);

@@ -19,7 +19,7 @@ public class Guest{
     private String fName;
     private String lName;
     private LocalDate birthDate;
-    private String nationality;
+    private Nationality nationality;
     private String phone;
 
     @OneToMany(mappedBy = "guest")
@@ -29,7 +29,7 @@ public class Guest{
 
     }
 
-    public Guest(String fName, String lName, LocalDate birthDate, String nationality, String phone) {
+    public Guest(String fName, String lName, LocalDate birthDate, Nationality nationality, String phone) {
         this.fName = fName;
         this.lName = lName;
         this.birthDate = birthDate;
@@ -69,11 +69,11 @@ public class Guest{
         this.birthDate = birthDate;
     }
 
-    public String getNationality() {
+    public Nationality getNationality() {
         return nationality;
     }
 
-    public void setNationality(String nationality) {
+    public void setNationality(Nationality nationality) {
         this.nationality = nationality;
     }
 

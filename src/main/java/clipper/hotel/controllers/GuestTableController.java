@@ -34,7 +34,7 @@ public class GuestTableController extends TableController<Guest> {
         colId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getId()).asObject());
         colName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getfName()));
         colLastName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getlName()));
-        colNationality.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNationality()));
+        colNationality.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNationality().getNationalityName()));
         colPhone.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPhone()));
         ColBirthDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getBirthDate()));
     }

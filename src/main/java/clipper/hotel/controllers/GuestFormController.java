@@ -1,10 +1,18 @@
 package clipper.hotel.controllers;
 
+import clipper.hotel.dao.GuestDAO;
+import clipper.hotel.factory.ConnectionFactory;
 import clipper.hotel.models.Accommodation;
 import clipper.hotel.models.Guest;
+import clipper.hotel.models.Nationality;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
+import java.util.Arrays;
 
 public class GuestFormController extends FormController<Guest> {
     @FXML
@@ -19,8 +27,9 @@ public class GuestFormController extends FormController<Guest> {
     @FXML
     private TextField inputName;
 
+
     @FXML
-    private TextField inputNationality;
+    private ChoiceBox<Nationality> inputNationality;
 
     @FXML
     private TextField inputPhone;
@@ -28,6 +37,8 @@ public class GuestFormController extends FormController<Guest> {
     @Override
     public void initialize() {
 
+        ObservableList<Nationality> nationalities = FXCollections.observableArrayList(Nationality.values());
+        inputNationality.setItems(nationalities);
     }
 
     @Override
@@ -36,7 +47,7 @@ public class GuestFormController extends FormController<Guest> {
         inputName.setText(data.getfName());
         inputLastName.setText(data.getlName());
         inputBirthDate.setValue(data.getBirthDate());
-        inputNationality.setText(data.getNationality());
+        inputNationality.setValue(data.getNationality());
         inputPhone.setText(data.getPhone());
 
     }
@@ -52,7 +63,7 @@ public class GuestFormController extends FormController<Guest> {
         data.setfName(inputName.getText());
         data.setlName(inputLastName.getText());
         data.setBirthDate(inputBirthDate.getValue());
-        data.setNationality(inputNationality.getText());
+        data.setNationality(inputNationality.getValue());
         data.setPhone(inputPhone.getText());
 
         return data;
@@ -64,7 +75,7 @@ public class GuestFormController extends FormController<Guest> {
         inputName.setText(null);
         inputLastName.setText(null);
         inputBirthDate.setValue(null);
-        inputNationality.setText(null);
+        inputNationality.setValue(null);
         inputPhone.setText(null);
 
 
