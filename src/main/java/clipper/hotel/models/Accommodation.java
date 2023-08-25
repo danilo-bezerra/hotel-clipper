@@ -90,10 +90,12 @@ public class Accommodation {
     }
 
     private void calcTotalValue() {
-        System.out.println(this);
-        //long duration = Duration.between( checkInDate.atStartOfDay(), checkOutDate.atStartOfDay()).toDays();
-        this.totalValue = dayPrice * calcDaysDistance(checkInDate, checkOutDate);
-        System.out.println(this);
+        if (checkInDate != null && checkOutDate != null) {
+            System.out.println(this);
+            //long duration = Duration.between( checkInDate.atStartOfDay(), checkOutDate.atStartOfDay()).toDays();
+            this.totalValue = dayPrice * calcDaysDistance(checkInDate, checkOutDate);
+            System.out.println(this);
+        }
     }
 
     public static Long calcDaysDistance(LocalDate start, LocalDate finish) {
@@ -106,7 +108,7 @@ public class Accommodation {
                 "id=" + id +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                // ", value=" + value +
+                 ", totalValue=" + totalValue +
                 //  ", paymentMethod=" + paymentMethod +
                 ", guest=" + guest +
                 '}';

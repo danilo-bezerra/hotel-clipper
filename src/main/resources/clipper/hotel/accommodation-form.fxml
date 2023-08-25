@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="204.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.AccommodationFormController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="id" />
+      <TextField fx:id="inputId" disable="true" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="14.0" layoutY="78.0" text="check-in" />
+      <Label layoutX="14.0" layoutY="139.0" text="check-out" />
+      <Label layoutX="234.0" layoutY="14.0" text="metodo pagameto" />
+      <Label layoutX="234.0" layoutY="78.0" text="total" />
+      <TextField fx:id="inputTotalValue" disable="true" layoutX="234.0" layoutY="102.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="234.0" layoutY="139.0" text="hospede" />
+      <DatePicker fx:id="inputCheckIn" layoutX="14.0" layoutY="102.0" prefHeight="25.0" prefWidth="200.0" />
+      <DatePicker fx:id="inputCheckOut" layoutX="14.0" layoutY="163.0" prefHeight="25.0" prefWidth="200.0" />
+      <ChoiceBox fx:id="inputGuest" layoutX="234.0" layoutY="163.0" prefHeight="25.0" prefWidth="200.0" />
+      <ChoiceBox fx:id="inputPaymentMethod" layoutX="234.0" layoutY="38.0" prefHeight="25.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="274.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clipper.hotel.controllers.AccommodationTableController">
+   <children>
+      <TableView fx:id="table" layoutX="-1.0" layoutY="-1.0" prefHeight="274.0" prefWidth="793.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colCheckIn" prefWidth="75.0" text="check-in" />
+            <TableColumn fx:id="colCheckOut" prefWidth="75.0" text="check-out" />
+            <TableColumn fx:id="colPaymentMethod" prefWidth="142.0" text="metodo pagamento" />
+            <TableColumn fx:id="colTotalValue" prefWidth="75.0" text="total" />
+            <TableColumn fx:id="colGuestId" prefWidth="75.0" text="id hospede" />
+            <TableColumn fx:id="colGuestName" prefWidth="116.0" text="nome hospede" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
