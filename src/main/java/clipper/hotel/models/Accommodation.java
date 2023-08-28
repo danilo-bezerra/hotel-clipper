@@ -102,6 +102,10 @@ public class Accommodation {
         return Duration.between( start.atStartOfDay(), finish.atStartOfDay()).toDays();
     }
 
+    public boolean requiredFieldsAreNotNull() {
+        return checkInDate != null && checkOutDate != null && guest != null && totalValue != null && paymentMethod != null;
+    }
+
     @Override
     public String toString() {
         return "Accommodation{" +

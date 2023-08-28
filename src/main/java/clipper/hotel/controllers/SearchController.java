@@ -3,8 +3,10 @@ package clipper.hotel.controllers;
 import clipper.hotel.HelloApplication;
 import clipper.hotel.dao.AccommodationDAO;
 import clipper.hotel.dao.GuestDAO;
+import clipper.hotel.exceptions.EntityValidationException;
 import clipper.hotel.models.Accommodation;
 import clipper.hotel.models.Guest;
+import clipper.hotel.validators.AccommodationValidator;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -48,6 +50,9 @@ public class SearchController extends Controller  {
     private GuestTableController guestTableController;
 
     private GuestFormController guestFormController;
+
+    @FXML
+    private Label errorLabel;
 
 
     public SearchController() {
@@ -167,14 +172,23 @@ public class SearchController extends Controller  {
     }
 
     public void saveItem() {
+        //errorLabel.setText("");
+        try {
         switch (getSelectedTab()) {
             case "Reservas" -> {
                 Accommodation a = accommodationFormController.getFormValue();
-                if (a.getId() != null) {
-                    accommodationDAO.update(a);
-                } else {
-                    accommodationDAO.create(a);
-                }
+
+
+                    new AccommodationValidator().validate(a);
+
+                    if (a.getId() != null) {
+                        accommodationDAO.update(a);
+                    } else {
+                        accommodationDAO.create(a);
+                    }
+
+
+
             }
             case "Hospedes" -> {
                 Guest g = guestFormController.getFormValue();
@@ -188,6 +202,11 @@ public class SearchController extends Controller  {
 
         clearForms();
         fillTables();
+        } catch (EntityValidationException e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
+        }
 
     }
 
@@ -199,5 +218,7 @@ public class SearchController extends Controller  {
 
         guestTableController.clearSelectedItem();
         guestFormController.clear();
+
+        errorLabel.setText("");
     }
 }
