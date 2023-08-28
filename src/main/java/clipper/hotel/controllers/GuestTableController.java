@@ -1,6 +1,7 @@
 package clipper.hotel.controllers;
 
 import clipper.hotel.models.Guest;
+import clipper.hotel.models.Nationality;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -34,7 +35,16 @@ public class GuestTableController extends TableController<Guest> {
         colId.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getId()).asObject());
         colName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getfName()));
         colLastName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getlName()));
-        colNationality.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNationality().getNationalityName()));
+        colNationality.setCellValueFactory(data -> {
+            String nationality = null;
+            Nationality n = data.getValue().getNationality();
+
+            if (n != null) {
+                nationality = n.getNationalityName();
+            }
+
+            return new SimpleStringProperty(nationality);
+        });
         colPhone.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPhone()));
         ColBirthDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getBirthDate()));
     }
