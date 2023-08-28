@@ -93,6 +93,10 @@ public class Guest{
         this.accommodations = accommodations;
     }
 
+    public boolean requiredFieldsAreNotNull() {
+        return fName != null && lName != null && birthDate != null && phone != null && nationality != null ;
+    }
+
     @Override
     public String toString() {
         return "id=" + id +

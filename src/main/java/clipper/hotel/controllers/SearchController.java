@@ -7,6 +7,7 @@ import clipper.hotel.exceptions.EntityValidationException;
 import clipper.hotel.models.Accommodation;
 import clipper.hotel.models.Guest;
 import clipper.hotel.validators.AccommodationValidator;
+import clipper.hotel.validators.GuestValidator;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -192,6 +193,9 @@ public class SearchController extends Controller  {
             }
             case "Hospedes" -> {
                 Guest g = guestFormController.getFormValue();
+
+                new GuestValidator().validate(g);
+
                 if (g.getId() != null) {
                     guestDAO.update(g);
                 } else {
