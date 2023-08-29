@@ -94,7 +94,7 @@ public class Guest{
     }
 
     public boolean requiredFieldsAreNotNull() {
-        return fName != null && lName != null && birthDate != null && phone != null && nationality != null ;
+        return !fName.isBlank() && !lName.isBlank() && birthDate != null && !phone.isBlank() && nationality != null ;
     }
 
     @Override
