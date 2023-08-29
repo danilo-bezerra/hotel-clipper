@@ -25,4 +25,10 @@ public class EmployeeDAO extends DAO<Employee> {
         return em.createQuery(sql, Employee.class).setParameter("username", username).setParameter("password", password).getSingleResult();
 
     }
+
+    public Employee findByUsername(String username) {
+        String sql = "SELECT e from Employee e WHERE e.username = :username";
+        return em.createQuery(sql, Employee.class).setParameter("username", username).getSingleResult();
+
+    }
 }

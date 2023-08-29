@@ -1,5 +1,6 @@
 package clipper.hotel.setup;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import clipper.hotel.dao.AccommodationDAO;
 import clipper.hotel.dao.EmployeeDAO;
 import clipper.hotel.dao.GuestDAO;
@@ -20,7 +21,7 @@ public class DevSetup {
         GuestDAO guestDAO = new GuestDAO(em);
         AccommodationDAO accommodationDAO = new AccommodationDAO(em);
 
-        Employee e1 = new Employee("clipper", "password" );
+        Employee e1 = new Employee("clipper", BCrypt.withDefaults().hashToString(12, "password".toCharArray()));
         Guest g1 = new Guest("Alien", "Clipper", LocalDate.now().minusYears(20L), Nationality.BRASIL, "88 981882984");
         Guest g2 = new Guest("Zoe", "Groove", LocalDate.now().minusYears(19L), Nationality.AUSTRALIA, "88 985968899");
 

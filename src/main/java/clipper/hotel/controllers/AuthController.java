@@ -1,5 +1,6 @@
 package clipper.hotel.controllers;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import clipper.hotel.dao.DAO;
 import clipper.hotel.dao.EmployeeDAO;
 import clipper.hotel.models.Employee;
@@ -28,18 +29,24 @@ public class AuthController extends Controller {
     protected void onLogin() {
         System.out.println("LOGIN" + inputUsername.getText() + " " + inputPassword.getText());
         try {
-            Employee e = dao.findByUsernameAndPassword(inputUsername.getText(), inputPassword.getText());
+
+            Employee e = dao.findByUsername(inputUsername.getText());
             System.out.println(dao.findAll());
 
             if (e != null) {
-                MainController.showMainView();
+                BCrypt.Result successfulLogin = BCrypt.verifyer().verify(inputPassword.getText().toCharArray(), e.getPassword());
+
+                if (successfulLogin.verified) {
+                    MainController.showMainView();
+                    return;
+                }
+
+                errorLabel.setText("Usuário e/ou senha inválidos");
             }
 
             System.out.println("SUCESSO NO LOGIN");
         } catch (Exception e) {
             errorLabel.setText("Usuário e/ou senha inválidos");
-            System.out.println("ERRO onLogin(): " + e.getMessage());
-            e.printStackTrace();
         }
 
 
