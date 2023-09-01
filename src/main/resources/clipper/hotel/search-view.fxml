@@ -52,6 +52,9 @@
          </font>
       </Label>
       <Label fx:id="errorLabel" layoutX="22.0" layoutY="578.0" prefHeight="17.0" prefWidth="357.0" textFill="RED" />
+      <Button layoutX="660.0" layoutY="19.0" mnemonicParsing="false" onAction="#search" text="Buscar" />
+      <TextField fx:id="inputSearch" layoutX="433.0" layoutY="19.0" prefHeight="25.0" prefWidth="219.0" />
+      <Button layoutX="721.0" layoutY="19.0" mnemonicParsing="false" onAction="#clearSearch" text="Limpar" />
 
 
    </children>

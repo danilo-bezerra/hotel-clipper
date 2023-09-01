@@ -55,6 +55,13 @@ public class SearchController extends Controller  {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private TextField inputSearch;
+
+    private List<Guest> guests;
+
+    private List<Accommodation> accommodations;
+
 
     public SearchController() {
         super();
@@ -107,11 +114,13 @@ public class SearchController extends Controller  {
         System.out.println("AUALIZANDO");
         guestTableController.updateTable(getGuests());
         accommodationTableController.updateTable(getAccommodations());
+        System.out.println(guests);
+        System.out.println(accommodations);
     }
 
     private ObservableList<Guest> getGuests() {
         ObservableList<Guest> list = FXCollections.observableArrayList();
-        List<Guest> guests = guestDAO.findAll();
+        guests = guestDAO.findAll();
         list.addAll(guests);
 
         return list;
@@ -119,7 +128,7 @@ public class SearchController extends Controller  {
 
     private ObservableList<Accommodation> getAccommodations() {
         ObservableList<Accommodation> list = FXCollections.observableArrayList();
-        List<Accommodation> accommodations = accommodationDAO.findAll();
+        accommodations = accommodationDAO.findAll();
         list.addAll(accommodations);
 
         return list;
@@ -173,7 +182,6 @@ public class SearchController extends Controller  {
     }
 
     public void saveItem() {
-        //errorLabel.setText("");
         try {
         switch (getSelectedTab()) {
             case "Reservas" -> {
@@ -224,5 +232,43 @@ public class SearchController extends Controller  {
         guestFormController.clear();
 
         errorLabel.setText("");
+    }
+
+    public void search() {
+        String searchText = inputSearch.getText();
+        System.out.println("Buscando: " + searchText);
+        if (searchText.isBlank()) {
+            fillTables();
+            return;
+        }
+
+        try {
+            switch (getSelectedTab()) {
+                case "Reservas" -> {
+                    ObservableList<Accommodation> list = FXCollections.observableArrayList();
+                    var accs = accommodations.stream().filter(a -> a.getId().toString().equals(searchText)).toList();
+                    System.out.println(accs);
+                    list.addAll(accs);
+                    accommodationTableController.updateTable(list);
+                }
+                case "Hospedes" -> {
+                    ObservableList<Guest> list = FXCollections.observableArrayList();
+                    var gues = guests.stream().filter(g -> g.getId().toString().equals(searchText) || g.getfName().equals(searchText) || g.getlName().equals(searchText)).toList();
+                    System.out.println(gues);
+                    list.addAll(gues);
+                    guestTableController.updateTable(list);
+                }
+            }
+        } catch (EntityValidationException e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
+        }
+    }
+
+    public void clearSearch() {
+        System.out.println("limpamdo pesqiiosa");
+        inputSearch.setText((null));
+        fillTables();
     }
 }

@@ -3,12 +3,14 @@ package clipper.hotel;
 import clipper.hotel.controllers.MainController;
 import clipper.hotel.factory.ConnectionFactory;
 import clipper.hotel.setup.DevSetup;
+import clipper.hotel.setup.InitialCredentialsSetup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
@@ -17,7 +19,10 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Locale.setDefault(Locale.US);
-        new DevSetup(ConnectionFactory.getEntitymanager()).populateDatabase();
+        EntityManager em = ConnectionFactory.getEntitymanager();
+        new InitialCredentialsSetup(em).execute();
+        new DevSetup(em).populateDatabase();
+
 
         MainController.setPrimaryStage(stage);
 
